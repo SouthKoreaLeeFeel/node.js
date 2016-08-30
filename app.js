@@ -14,7 +14,7 @@ db.on("error", function(err){
   console.log("DB ERROR :", err);
 });
 
-/*
+
 var dataSchema = mongoose.Schema({
   name:String,
   count:Number
@@ -23,7 +23,8 @@ var dataSchema = mongoose.Schema({
 var Data = mongoose.model('data',dataSchema);
 
 Data.findOne({name:"myData"},function(err,data){
-  if(err){ return console.log("Data ERROR :  " ,err);}
+  if(err) return console.log("Data ERROR :  " ,err);
+
   if(!data){
     Data.create({name:"myData",count:0},function(err,data){
       if(err) return console.log("Data ERROR",err);
@@ -32,19 +33,24 @@ Data.findOne({name:"myData"},function(err,data){
   }
 
 });
-
+/*
 app.get('/',function (req,res){
   res.send('Hello World!');
 });
 */
 app.set("view engine",'ejs');
-app.use(express.static(path.join(__dirname + '/public')));
-console.log(__dirname);
-var data={count:0};
-
+//app.use(express.static(path.join(__dirname + '/public')));
+//console.log(__dirname);
+//var data={count:0};
 app.get('/', function (req,res){
-  data.count++;
-  res.render('my_first_ejs',data);
+  Data.findOne({name:"myData"},function(err,data){
+    if(err) return console.log("Data ERROR :  " ,err);
+    data.count++;
+    data.save(function (err){
+      if(err) return console.log("Data ERROR :  " ,err);
+        res.render('my_first_ejs',data);
+    });
+  });
 });
 
 app.get('/reset', function (req,res){
@@ -53,17 +59,39 @@ app.get('/reset', function (req,res){
 });
 
 app.get('/set/count', function (req,res){
-console.log('req.query.count : ' +req.query.count);
-  if (req.query.count) {
-    data.count = req.query.count;
-  }
-  res.render('my_first_ejs',data);
+  //console.log('req.query.count : ' +req.query.count);
+  //if (req.query.count) data.count = req.query.count;
+  //res.render('my_first_ejs',data);
+  if(req.query.count) setCounter(res,req.query.count);
+  else getCount(res);
 });
 
 app.get('/set/:num', function (req,res){
-  data.count=req.params.num;
-  res.render('my_first_ejs',data);
+  //data.count=req.params.num;
+  //res.render('my_first_ejs',data);
+  if(req.prams.num) setCounter(res,req.prams.num);
+  else getCount(res);
 });
+
+function setCounter(res,num) {
+  console.log("setCounter");
+  Data.findOne({name:"myData"},function (err,data){
+    if(err) return console.log("Data ERROR: ",err);
+    data.count = num;
+    data.save(function (err){
+      if(err) return console.log("Data ERROR : ",err);
+      res.render('my_first_ejs',data);
+    });
+  });
+}
+
+function getCounter(res,num) {
+  console.log("getCounter");
+  Data.findOne({name:"myData"},function (err,data){
+    if(err) return console.log("Data ERROR: ",err);
+    res.render('my_first_ejs',data);
+  });
+}
 
 app.listen(3000, function(){
   console.log('Server On!');
