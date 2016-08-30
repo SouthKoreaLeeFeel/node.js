@@ -4,7 +4,8 @@ var app = express();
 var mongoose = require('mongoose');
 
 
-mongoose.connect("mongodb://test:1234@ds019076.mlab.com:19076/southkorea");
+//mongoose.connect("mongodb://test:1234@ds019076.mlab.com:19076/southkorea");
+mongoose.connect(process.env.MONGO_DB);
 var db = mongoose.connection;
 db.once("open", function(){
   console.log("DB connected!");
