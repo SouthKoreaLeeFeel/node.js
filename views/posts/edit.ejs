@@ -1,0 +1,26 @@
+<!-- views/posts/edit.ejs -->
+<!DOCTYPE html>
+<html>
+  <% include ../partials/head %>
+  <body>
+    <% include ../partials/header %>
+    <div class="posts">
+    <% include partials/top %>
+
+    <!-- main start-->
+      <div class="edit">
+        <h3>New Post</h3>
+        <form class="posts_form" action="/posts/<%=data._id%>?_method=put" method="post">
+          <label>Title</label>
+          <input type="text" name="post[title]" value="<%=data.title%>">
+          <label>Body</label>
+          <textarea name="post[body]" rows="8" cols="40"><%=data.body%></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        <a href="/posts/<%=data._idx%>"><button>Back</button></a>
+      </div>
+
+    </div>
+    <% include ../partials/footer %>
+  </body>
+</html>

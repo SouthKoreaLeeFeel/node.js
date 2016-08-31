@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/head %>
+  <body>
+    <% include ../partials/header %>
+    <div class="posts">
+    <% include partials/top %>
+
+      <!-- main start-->
+      <div class="index">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>body</th>
+              <th>id</th>
+              <th>date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(function(e){%>
+            <tr>
+              <th><a href="/posts/<%= e._id %>"><%= e.title %></a></th>
+              <th><%= e.body %></th>
+              <th><%= e._id %></th>
+              <th><%= e.createdAt.toLocaleDateString() %></th>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <a href="javascript:history.back();"><button>New</button></a>
+      </div>
+      <!-- main end-->
+    </div>
+    <% include ../partials/footer %>
+  </body>
+</html>
