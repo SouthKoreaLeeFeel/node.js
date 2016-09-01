@@ -1,0 +1,25 @@
+<!-- views/posts/index.login -->
+<!DOCTYPE html>
+<html>
+  <% include ../partials/head %>
+  <body>
+    <% include ../partials/header %>
+    <div class="users">
+
+      <!-- main start-->
+      <div class="show">
+        <h3>User Info</h3>
+        <div class="content">
+          <p class="user_info">Email<small> : <%= user.email %></small></p>
+          <p class="user_info">Nickname<small> : <%= user.nickname %></small></p>
+          <a href="/users/<%=user._id%>/edit"><button>Edit</button></a>
+        </div>
+        <a href="/"><button>Back</button>
+      </div>
+      <!-- main end-->
+      <script type="text/javascript" src="/js/userform.js"></script>
+
+    </div>
+    <% include ../partials/footer %>
+  </body>
+</html>

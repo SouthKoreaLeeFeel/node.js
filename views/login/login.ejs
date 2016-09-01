@@ -1,0 +1,30 @@
+<!-- views/posts/index.login -->
+<!DOCTYPE html>
+<html>
+  <% include ../partials/head %>
+  <body>
+    <% include ../partials/header %>
+    <div class="login">
+
+      <!-- main start-->
+      <div>
+        <h3>Loggin</h3>
+        <form class="login_form" action="/login" method="post">
+          <label>Email</label>
+          <input type="text" name="email" value="<%= email %>">
+          <label>password</label>
+          <input type="password" name="password">
+
+          <% loginError.forEach(function(e){ %>
+            <p class="error_message"><%= e%></p>
+          <%  }) %>
+          <button class="submit_btn" type="submit">Submit</button>
+        </form>
+        <a href="/posts"><button>Back</button></a>
+      </div>
+      <!-- main end-->
+
+    </div>
+    <% include ../partials/footer %>
+  </body>
+</html>
