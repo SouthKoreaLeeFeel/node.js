@@ -1,30 +1,47 @@
-<!-- views/posts/index.login -->
 <!DOCTYPE html>
 <html>
-  <% include ../partials/head %>
+  <head>
+    <% include ../partials/head %>
+  </head>
   <body>
-    <% include ../partials/header %>
+    <header>
+      <% include ../partials/header %>
+    </header>
     <div class="login">
+<!-- main start-->
 
-      <!-- main start-->
-      <div>
-        <h3>Loggin</h3>
-        <form class="login_form" action="/login" method="post">
-          <label>Email</label>
-          <input type="text" name="email" value="<%= email %>">
-          <label>password</label>
-          <input type="password" name="password">
-
-          <% loginError.forEach(function(e){ %>
-            <p class="error_message"><%= e%></p>
-          <%  }) %>
-          <button class="submit_btn" type="submit">Submit</button>
-        </form>
-        <a href="/posts"><button>Back</button></a>
-      </div>
-      <!-- main end-->
-
+<!-- views/login/login.ejs -->
+<div class="message"><%= loginMessage %></div>
+<div class="buttons">
+  <button onclick="location.href='/'" class="float_left">Home</button>
+  <button onclick="location.href='/users/new'" class="float_right">Sign Up</button>
+</div>
+<h3>Login</h3>
+<form class="checkValidation" action="/login" method="post">
+  <div class="inputs">
+    <div class="floats">
+      <label>Email</label>
+      <input class="cvRequired" type="text" name="email" cvRqErrMsg="Please enter your login email." cvRqErrTo="#cvRqErrEmail" value="">
+      <div id="cvRqErrEmail" class="message"></div>
     </div>
-    <% include ../partials/footer %>
+    <div class="floats">
+      <label>Password</label>
+      <input class="cvRequired" type="password" name="password" cvRqErrMsg="Please enter your password." cvRqErrTo="#cvRqErrPassword" value="">
+      <div id="cvRqErrPassword" class="message"></div>
+    </div>
+    <% loginError.forEach(function(e){ %>
+        <div class="message"><%= e %><div>
+    <% }) %>
+  </div>
+  <div class="buttons">
+    <button type="submit">Submit</button>
+  </div>
+</form>
+
+<!-- main end -->
+    </div><!--login end -->
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
   </body>
 </html>

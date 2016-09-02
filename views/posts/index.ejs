@@ -1,47 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <% include ../partials/head %>
+  <head>
+    <% include ../partials/head %>
+  </head>
   <body>
-    <% include ../partials/header %>
+    <header>
+      <% include ../partials/header %>
+    </header>
     <div class="posts">
     <% include partials/top %>
+<!-- main start-->
 
-      <!-- main start-->
-      <div class="index">
-        <a href="/posts/new"><button>New</button></a>
-        <% if(user) {%>
-          <a href="/logout" class="float_right"><button>Logout</button></a>
-          <a href="/users/<%= user._id %>" class="float_right"><button>My Profile (<%= user.nickname %>)</button></a>
-        <% } else { %>
-          <a href="/login" class="float_right"><button>Login</button></a>
-          <a href="/users/new" class="float_right"><button>Sign Up</button></a>
-        <% } %>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>author</th>
-              <th>date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% posts.forEach(function(post){%>
-            <tr>
-              <th><a href="/posts/<%= post._id %>"><%= post.title %></a></th>
-              <% if(post.author) {%>
-                <th><%= post.author.nickname %></th>
-              <% } else { %>
-                <th>???</th>
-              <% } %>
-              <th><%= post.createdAt.toLocaleDateString() %></th>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
+<!-- views/posts/index.ejs -->
+<div class="index">
+<div class="message">
+  <%= postsMessage %>
+</div>
+  <div class="buttons">
+    <button class="float_left" onclick="location.href='/posts/new'">New</button>
+    <% if(user) {%>
+      <button class="float_right" onclick="location.href='/logout'">Logout</button>
+      <button class="float_right" onclick="location.href='/users/<%= user._id %>'">My Profile (<%= user.nickname %>)</button>
+    <% } else { %>
+      <button class="float_right" onclick="location.href='/login'">Login</button>
+      <button class="float_right" onclick="location.href='/users/new'">Sign Up</button>
+    <% } %>
+  </div>
+  <table>
+    <colgroup>
+      <col class="title"/>
+      <col class="date"/>
+      <col class="author"/>
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Author</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% posts.forEach(function(post){ %>
+        <tr onclick="window.location = '/posts/<%= post._id %>'">
+          <td><%= post.title %></td>
+          <td><%= post.getCreatedDate() %></td>
+          <td><%= post.author.nickname %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
 
-      </div>
-      <!-- main end-->
-    </div>
-    <% include ../partials/footer %>
+<!-- main end -->
+    </div><!--posts end -->
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
   </body>
 </html>

@@ -1,27 +1,49 @@
-<!-- views/posts/edit.ejs -->
 <!DOCTYPE html>
 <html>
-  <% include ../partials/head %>
+  <head>
+    <% include ../partials/head %>
+  </head>
   <body>
-    <% include ../partials/header %>
+    <header>
+      <% include ../partials/header %>
+    </header>
     <div class="posts">
     <% include partials/top %>
+<!-- main start-->
 
-    <!-- main start-->
-      <div class="edit">
-        <h3>New Post</h3>
-        <form class="posts_form" action="/posts/<%=post._id%>?_method=put" method="post">
-          <label>Title</label>
-          <input type="text" name="post[title]" value="<%=post.title%>">
-          <label>Body</label>
-          <textarea name="post[body]" rows="8" cols="40"><%=post.body%></textarea>
-          <div class="float_right">Auther : <%= user.nickname %></div>
-          <button type="submit">Submit</button>
-        </form>
-        <a href="/posts/<%=post._idx%>"><button>Back</button></a>
+<!-- views/posts/index.ejs -->
+<div class="edit">
+  <div class="buttons">
+    <button onclick="history.back()">Back</button>
+  </div>
+  <h3>Edit Post</h3>
+  <form class="checkValidation" action="/posts/<%=post._id%>?_method=put" method="post">
+    <div class="inputs">
+      <div class="floats">
+        <label>Title</label>
+        <input class="cvRequired" type="text" name="post[title]" cvRqErrMsg="Title is required." cvRqErrTo="#cvErrTitle" value="<%=post.title%>">
+        <div id="cvErrTitle" class="message"></div>
       </div>
-
+      <div class="floats">
+        <label>Author</label>
+        <input disabled type="text" value="<%= user.nickname %>">
+      </div>
+      <div class="floats">
+        <label>Body</label>
+        <textarea class="cvRequired" name="post[body]" cvRqErrMsg="Body is required." cvRqErrTo="#cvErrBody"><%=post.body%></textarea>
+        <div id="cvErrBody" class="message"></div>
+      </div>
     </div>
-    <% include ../partials/footer %>
+    <div class="buttons">
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<!-- main end -->
+    </div><!--posts end -->
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
   </body>
 </html>
