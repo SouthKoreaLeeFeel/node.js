@@ -10,14 +10,15 @@
     <!-- main start-->
       <div class="edit">
         <h3>New Post</h3>
-        <form class="posts_form" action="/posts/<%=data._id%>?_method=put" method="post">
+        <form class="posts_form" action="/posts/<%=post._id%>?_method=put" method="post">
           <label>Title</label>
-          <input type="text" name="post[title]" value="<%=data.title%>">
+          <input type="text" name="post[title]" value="<%=post.title%>">
           <label>Body</label>
-          <textarea name="post[body]" rows="8" cols="40"><%=data.body%></textarea>
+          <textarea name="post[body]" rows="8" cols="40"><%=post.body%></textarea>
+          <div class="float_right">Auther : <%= user.nickname %></div>
           <button type="submit">Submit</button>
         </form>
-        <a href="/posts/<%=data._idx%>"><button>Back</button></a>
+        <a href="/posts/<%=post._idx%>"><button>Back</button></a>
       </div>
 
     </div>

@@ -20,18 +20,20 @@
           <thead>
             <tr>
               <th>Title</th>
-              <th>body</th>
-              <th>id</th>
+              <th>author</th>
               <th>date</th>
             </tr>
           </thead>
           <tbody>
-            <% data.forEach(function(e){%>
+            <% posts.forEach(function(post){%>
             <tr>
-              <th><a href="/posts/<%= e._id %>"><%= e.title %></a></th>
-              <th><%= e.body %></th>
-              <th><%= e._id %></th>
-              <th><%= e.createdAt.toLocaleDateString() %></th>
+              <th><a href="/posts/<%= post._id %>"><%= post.title %></a></th>
+              <% if(post.author) {%>
+                <th><%= post.author.nickname %></th>
+              <% } else { %>
+                <th>???</th>
+              <% } %>
+              <th><%= post.createdAt.toLocaleDateString() %></th>
             </tr>
             <% }) %>
           </tbody>
