@@ -3,6 +3,8 @@ var router   = express.Router();
 var mongoose = require('mongoose');
 var passport = require('../config/passport.js');
 
+//mongodb://test:1234@ds019076.mlab.com:19076/southkorea
+
 router.get('/', function (req,res) {
   res.redirect('/posts');
 });
