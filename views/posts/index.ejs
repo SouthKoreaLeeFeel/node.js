@@ -2,6 +2,18 @@
 <html>
   <head>
     <% include ../partials/head %>
+    <script type="text/javascript">
+    var color_old;
+    $(document).ready(function() {
+      $("tbody tr").bind('mouseover', function(event){
+        color_old = $(this).css('background-color');
+        $(this).css('background-color', '#BBBBFF');
+      });
+      $("tbody tr").bind('mouseout',  function(event){
+        $(this).css('background-color', color_old);
+      });
+    });
+    </script>
   </head>
   <body>
     <header>
@@ -25,6 +37,7 @@
       <button class="float_right" onclick="location.href='/login'">Login</button>
       <button class="float_right" onclick="location.href='/users/new'">Sign Up</button>
     <% } %>
+    <button class="float_left" onclick="location.href='/chat'">Chat</button>
   </div>
   <table>
     <colgroup>
@@ -41,14 +54,40 @@
     </thead>
     <tbody>
       <% posts.forEach(function(post){ %>
-        <tr onclick="window.location = '/posts/<%= post._id %>'">
-          <td><%= post.title %></td>
+        <tr>
+          <td onclick="window.location = '/posts/<%= post._id %>'"><%= post.title %></td>
           <td><%= post.getCreatedDate() %></td>
           <td><%= post.author.nickname %></td>
         </tr>
       <% }) %>
     </tbody>
   </table>
+
+  <!-- paging -->
+  <ul class="pagination">
+    <%
+      var offset = 3;
+      var partialQuery;
+      if(urlQuery) partialQuery = "&"+urlQuery.replace(/page=(.*?)(&|$)/ig,"");
+    %>
+    <% for(i=1; i<=maxPage; i++){ %>
+      <% if(i<=offset || i>maxPage-offset || (i>=page-(offset-1) && i<= page+(offset-1))){ %>
+        <%if(i != page){ %>
+          <li>[<a href="/posts?page=<%= i%><%=partialQuery%>"><%= i %></a>]</li>
+        <% }else{ %>
+          <li>[<b><%=i%></b>]</li>
+        <% } %>
+      <% }else if(i == offset + 1 || 1 == maxPage-offset){ %>
+        <li>...</li>
+      <% } %>
+    <% } %>
+  </ul>
+  <div class="counter">
+    <% if(counter){ %>
+        Total <%= counter.totalCount %> visitors <br>
+        (today : <%= counter.totalCount %>)
+    <% } %>
+  </div>
 </div>
 
 <!-- main end -->

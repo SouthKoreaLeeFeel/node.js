@@ -1,17 +1,10 @@
 var express = require('express');
-var app = express();
-var http = require('http').Server(app);
+var router   = express.Router();
+var http = require('http').Server(router);
 var io = require('socket.io')(http);
-var path = require('path');
-var flash = require('connect-flash');
 
-
-app.use(express.static(path.join(__dirname + '/public')));
-app.use(flash());
-app.set("view engine",'ejs');
-
-app.get("/chatClient",function(req, res){
-  res.render("chatClient");
+router.get("/",function(req, res){
+  res.render("chat/chat");
 });
 
 io.on('connection', function(socket){
@@ -30,10 +23,6 @@ io.on('connection', function(socket){
     console.log(msg);
     io.emit('receive message', msg);
   });
-});
-
-http.listen('3100', function(){
-  console.log(" chatClient server on!");
 });
 
 var StringBuffer = function() {
@@ -58,3 +47,9 @@ function setUserName()
     }
     return bName.toString();
 }
+
+http.listen('3100', function(){
+  console.log(" chatClient server on!");
+});
+
+module.exports = router;

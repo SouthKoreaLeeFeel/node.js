@@ -13,11 +13,15 @@
 <!-- views/users/show.ejs -->
 <div class="show">
   <div class="buttons floats">
-    <button onclick="location.href='/'">Home</button>
+    <button onclick="location.href='/posts'">Home</button>
     <button onclick="location.href='/users/<%=user._id%>/edit'" class="float_right">Edit</button>
   </div>
   <h3>User Info</h3>
+
   <div class="inputs">
+    <div>
+      <img src="/img/boss.jpg" height="300px" weight="200px" />
+    </div>
     <div class="floats">
       <label>Email</label>
       <input disabled type="text" value="<%= user.email %>">

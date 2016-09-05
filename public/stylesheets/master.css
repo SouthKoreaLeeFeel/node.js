@@ -157,6 +157,14 @@ button:hover{
   border-left: 1px solid #aaa;
 }
 
+.pagination{
+  text-align: center;
+}
+.pagination li{
+  display: inline;
+}
+
+
 .login,
 .users
 {
@@ -197,3 +205,5 @@ button:hover{
 .posts textarea{
   width: 280px;
 }
+
+.imgDiv{margin:0 auto; width:300px; height:100px;}
