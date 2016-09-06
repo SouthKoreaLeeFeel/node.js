@@ -13,14 +13,11 @@
 
 <!-- views/posts/index.ejs -->
 <div class="new">
-  <div class="buttons">
-    <button onclick="location.href='/posts'">Back</button>
-  </div>
-  <h3>New Post</h3>
-  <form class="checkValidation" action="/posts" method="post">
+  <h3>New Post <small class="float_right">*Required</small></h3>
+  <form class="checkValidation" action="/posts" method="post" id="checkValidation">
     <div class="inputs">
       <div class="floats">
-        <label>Title</label>
+        <label>Title*</label>
         <input class="cvRequired" type="text" name="post[title]" cvRqErrMsg="Title is required." cvRqErrTo="#cvErrTitle" value="">
         <div id="cvErrTitle" class="message"></div>
       </div>
@@ -29,15 +26,18 @@
         <input disabled type="text" value="<%= user.nickname %>">
       </div>
       <div class="floats">
-        <label>Body</label>
+        <label>Body*</label>
         <textarea class="cvRequired" name="post[body]" cvRqErrMsg="Body is required." cvRqErrTo="#cvErrBody"></textarea>
         <div id="cvErrBody" class="message"></div>
       </div>
     </div>
-    <div class="buttons">
-      <button type="submit">Submit</button>
-    </div>
   </form>
+  <br>
+  <div class="login" >
+    <button type="submit" form="checkValidation">Create</button>
+    <button onclick="location.href='/posts'" >Cancle</button>
+  </div>
+
 </div>
 
 <!-- main end -->

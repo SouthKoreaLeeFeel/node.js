@@ -7,16 +7,19 @@
     <header>
       <% include ../partials/header %>
     </header>
-    <div class="login">
-<!-- main start-->
+    <!-- main start-->
 
-<!-- views/login/login.ejs -->
+    <!-- views/login/login.ejs -->
+<!--
+<div class="login">
+
 <div class="message"><%= loginMessage %></div>
 <div class="buttons">
-  <button onclick="location.href='/'" class="float_left">Home</button>
+  <button onclick="location.href='/posts'" class="float_left">Home</button>
   <button onclick="location.href='/users/new'" class="float_right">Sign Up</button>
 </div>
 <h3>Login</h3>
+
 <form class="checkValidation" action="/login" method="post">
   <div class="inputs">
     <div class="floats">
@@ -33,10 +36,24 @@
         <div class="message"><%= e %><div>
     <% }) %>
   </div>
-  <div class="buttons">
+  <div class="loginSubmitBtn">
     <button type="submit">Submit</button>
   </div>
 </form>
+-->
+
+<div class="login-card">
+  <h1>Log-in</h1><br>
+  <form class="checkValidation" action="/login" method="post">
+    <input class="cvRequired" type="text" name="email" cvRqErrMsg="Please enter your login email." cvRqErrTo="#cvRqErrEmail" placeholder="Email" value="">
+    <input class="cvRequired" type="password" name="password" cvRqErrMsg="Please enter your password." cvRqErrTo="#cvRqErrPassword" placeholder="Password" value="">
+    <input type="submit" name="login" class="login login-submit" value="login">
+  </form>
+
+  <div class="login-help">
+    <a href="/users/new">Register</a> • <a href="#">Forgot Password</a>
+  </div>
+</div>
 
 <!-- main end -->
     </div><!--login end -->

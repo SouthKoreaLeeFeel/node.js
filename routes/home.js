@@ -18,7 +18,7 @@ router.post('/login', passport.authenticate('local-login', {
 router.get('/logout', function(req, res) {
     req.logout();
     req.flash("postsMessage", "Good-bye, have a nice day!");
-    res.redirect('/');
+    res.redirect('/posts');
 });
 
 module.exports = router;

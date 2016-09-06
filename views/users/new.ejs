@@ -15,9 +15,8 @@
   <div class="buttons">
     <button onclick="location.href='/'">Home</button>
   </div>
-  <h3>Sign Up</h3>
-  <form class="checkValidation" action="/users" method="post">
-
+  <h3>Sign Up <small class="float_right">*Required</small></h3>
+  <form class="checkValidation" action="/users" method="post" id="checkValidation">
     <div class="inputs">
       <div class="floats">
         <label>Email*</label>
@@ -40,12 +39,14 @@
         <input id="cvMatWPassword" type="password" name="user[passwordConfirmation]" value="">
         <div id="cvErrPasswordConfirmation" class="message"></div>
       </div>
-      <p><small>*Required</small></p>
-    </div>
-    <div class="buttons">
-      <button type="submit">Submit</button>
     </div>
   </form>
+    <br>
+    <div class="login" >
+      <button type="submit" form="checkValidation">Create</button>
+      <button onclick="location.href='/posts'" >Cancle</button>
+    </div>
+
 </div>
 
 <!-- main end -->

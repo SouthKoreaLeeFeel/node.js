@@ -17,13 +17,17 @@
   <%= postsMessage %>
 </div>
   <div class="buttons">
-    <button class="float_left" onclick="location.href='/posts/new'">New</button>
+    <div class="counter float_left">
+      <% if(counter){ %>
+        Total <%= counter.totalCount %> visitors
+      <% } %>
+    </div>
     <% if(user) {%>
       <button class="float_right" onclick="location.href='/logout'">Logout</button>
       <button class="float_right" onclick="location.href='/users/<%= user._id %>'">My Profile (<%= user.nickname %>)</button>
     <% } else { %>
       <button class="float_right" onclick="location.href='/login'">Login</button>
-      <button class="float_right" onclick="location.href='/users/new'">Sign Up</button>
+      <!--<button class="float_right" onclick="location.href='/users/new'">Sign Up</button>-->
     <% } %>
   </div>
   <table>
@@ -39,8 +43,8 @@
         <th>Num</th>
         <th>Title</th>
         <th>Views</th>
-        <th>Date</th>
         <th>Author</th>
+        <th>Date</th>
       </tr>
     </thead>
     <tbody>
@@ -58,12 +62,15 @@
             <span class="comments">(<%= post.comments.length %>)</span>
           </td>
           <td><%= post.views %></td>
-          <td><%= post.getFormattedDate(post.createdAt) %></td>
           <td class="highlight" data-highlight="<%= search.highlight.author %>"><%= post.author.nickname %></td>
+          <td><%= post.getFormattedDate(post.createdAt) %></td>
         </tr>
       <% }) %>
     </tbody>
   </table>
+  <br>
+  <button class="float_right" onclick="location.href='/posts/new'">New</button>
+  <br>
   <ul class="pagination">
     <%
       var offset = 3;
@@ -81,13 +88,9 @@
       <% } %>
     <%}%>
   </ul>
+
   <div class="floats">
-    <div class="counter float_left">
-      <% if(counter){ %>
-        Total <%= counter.totalCount %> visitors<br>
-        (today: <%= counter.todayCount %>)
-      <% } %>
-    </div>
+
     <div class="search float_right">
       <form class="checkValidation" action="/posts/" id="search">
         <select name="searchType" <%= search.searchType=="author!"?"disabled":"" %>>
