@@ -2,18 +2,6 @@
 <html>
   <head>
     <% include ../partials/head %>
-    <script type="text/javascript">
-    var color_old;
-    $(document).ready(function() {
-      $("tbody tr").bind('mouseover', function(event){
-        color_old = $(this).css('background-color');
-        $(this).css('background-color', '#BBBBFF');
-      });
-      $("tbody tr").bind('mouseout',  function(event){
-        $(this).css('background-color', color_old);
-      });
-    });
-    </script>
   </head>
   <body>
     <header>
@@ -37,59 +25,101 @@
       <button class="float_right" onclick="location.href='/login'">Login</button>
       <button class="float_right" onclick="location.href='/users/new'">Sign Up</button>
     <% } %>
-    <button class="float_left" onclick="location.href='/chat'">Chat</button>
   </div>
   <table>
     <colgroup>
+      <col class="num"/>
       <col class="title"/>
+      <col class="views"/>
       <col class="date"/>
       <col class="author"/>
     </colgroup>
     <thead>
       <tr>
+        <th>Num</th>
         <th>Title</th>
+        <th>Views</th>
         <th>Date</th>
         <th>Author</th>
       </tr>
     </thead>
     <tbody>
+      <% if(posts == null || posts.length == 0){ %>
+          <tr class="noData">
+            <td colspan="5">There is no data to show :(</td>
+          </tr>
+      <% } %>
+      <% query = urlQuery('?'); %>
       <% posts.forEach(function(post){ %>
-        <tr>
-          <td onclick="window.location = '/posts/<%= post._id %>'"><%= post.title %></td>
-          <td><%= post.getCreatedDate() %></td>
-          <td><%= post.author.nickname %></td>
+        <tr onclick="window.location = '/posts/<%= post._id %><%= query %>'">
+          <td><%= post.numId %></td>
+          <td class="highlight" data-highlight="<%= search.highlight.title %>">
+            <%= post.title %>
+            <span class="comments">(<%= post.comments.length %>)</span>
+          </td>
+          <td><%= post.views %></td>
+          <td><%= post.getFormattedDate(post.createdAt) %></td>
+          <td class="highlight" data-highlight="<%= search.highlight.author %>"><%= post.author.nickname %></td>
         </tr>
       <% }) %>
     </tbody>
   </table>
-
-  <!-- paging -->
   <ul class="pagination">
     <%
       var offset = 3;
-      var partialQuery;
-      if(urlQuery) partialQuery = "&"+urlQuery.replace(/page=(.*?)(&|$)/ig,"");
+      var partialQuery = urlQuery("&",["page"]);
     %>
-    <% for(i=1; i<=maxPage; i++){ %>
-      <% if(i<=offset || i>maxPage-offset || (i>=page-(offset-1) && i<= page+(offset-1))){ %>
-        <%if(i != page){ %>
-          <li>[<a href="/posts?page=<%= i%><%=partialQuery%>"><%= i %></a>]</li>
-        <% }else{ %>
-          <li>[<b><%=i%></b>]</li>
+    <% for(i=1;i<=maxPage;i++){ %>
+      <% if(i<=offset || i>maxPage-offset || (i>=page-(offset-1) && i<=page+(offset-1))){ %>
+        <% if(i != page){ %>
+          <li>[<a href="/posts?page=<%= i %><%= partialQuery %>"> <%= i %> </a>]</li>
+        <% } else { %>
+          <li>[ <b><%= i %></b> ]</li>
         <% } %>
-      <% }else if(i == offset + 1 || 1 == maxPage-offset){ %>
-        <li>...</li>
+      <% } else if(i == offset+1 || i == maxPage-offset){ %>
+          <li>...</li>
       <% } %>
-    <% } %>
+    <%}%>
   </ul>
-  <div class="counter">
-    <% if(counter){ %>
-        Total <%= counter.totalCount %> visitors <br>
-        (today : <%= counter.totalCount %>)
-    <% } %>
+  <div class="floats">
+    <div class="counter float_left">
+      <% if(counter){ %>
+        Total <%= counter.totalCount %> visitors<br>
+        (today: <%= counter.todayCount %>)
+      <% } %>
+    </div>
+    <div class="search float_right">
+      <form class="checkValidation" action="/posts/" id="search">
+        <select name="searchType" <%= search.searchType=="author!"?"disabled":"" %>>
+          <% var select %>
+          <option value="title,body"
+            <%= search.searchType=="title,body"?select="selected":"" %>>Title+Body</option>
+          <option value="title"
+            <%= search.searchType=="title"?select="selected":"" %>>Title</option>
+          <option value="body"
+            <%= search.searchType=="body"?select="selected":"" %>>Body</option>
+          <%if(search.searchType=="author!"){%>
+            <option value="author!"
+              <%= search.searchType=="author!"?select="selected":"" %>>Author</option>
+          <%} else {%>
+            <option value="author"
+              <%= search.searchType=="author"?select="selected":"" %>>Author</option>
+          <%}%>
+        </select>
+        <input class="cvMinLength" cvMinLength="3"
+          cvMinLenErrTo="#searchError"
+          cvMinLenErrMsg="It should be at least 3 characters"
+          type="text" name="searchText" value="<%= select?search.searchText:"" %>"
+          <%= search.searchType=="author!"?"disabled":"" %>>
+        <button type="submit" <%= search.searchType=="author!"?"disabled":"" %>>search</button>
+        <%if(search.searchType){%>
+          <button type="button" onclick="window.location = '/posts?page=1'">cancel</button>
+        <%}%>
+        <div class="message" id="searchError"></div>
+      </form>
+    </div>
   </div>
 </div>
-
 <!-- main end -->
     </div><!--posts end -->
     <footer>

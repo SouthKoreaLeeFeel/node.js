@@ -1,3 +1,10 @@
+*{
+  outline: none;
+}
+
+.headerLogo{
+  text-align:center;
+}
 body{
   color:#0C2E2B;
   font-family: 'Open Sans', sans-serif;
@@ -35,6 +42,14 @@ h3{
   background-color: #F5F5F5;
   padding: 5px 15px;
 }
+h4{
+  margin: 0;
+}
+textarea, input{
+  padding: 3px 7px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
 footer{
   text-align:center;
   padding: 10px 0;
@@ -52,10 +67,17 @@ footer{
   clear: both;
   color: tomato;
 }
+.searchHighligt {
+  background-color: yellow;
+}
 table{
   width: 100%;
   border-collapse: collapse;
   border-top: 1px solid #ccc;
+}
+table colgroup .num,
+table colgroup .views {
+  width: 70px;
 }
 table colgroup .date {
   width: 100px;
@@ -72,18 +94,26 @@ table td, th{
 table thead tr{
   background-color: #F5F5F5;
 }
-table tbody tr:hover td:first-child{
-  cursor:pointer;
+table tbody tr:hover td:first-child+td{
   text-decoration: underline;
 }
+table tbody tr.noData,
+table tbody tr.noData:hover td:first-child+td,
+table tbody tr.noData td{
+  cursor:default;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  text-align: center;
+}
 table tbody td{
-    cursor:pointer;
+  text-align: center;
+  cursor:pointer;
 }
 table tbody tr:nth-child(odd){
   background-color: #F4FFFF;
 }
-table tbody td+td{
-  text-align: center;
+table tbody td:first-child+td{
+  text-align: left;
 }
 .floats:after{
   content: "";
@@ -107,18 +137,12 @@ table tbody td+td{
   float:right;
   width: 180px;
   height: 20px;
-  padding: 3px 7px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
   margin: 3px 0;
 }
 .inputs textarea{
   float:right;
   resize: vertical;
   width: 245px;
-  padding: 3px 7px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
   margin: 3px 0;
   height: 100px;
 }
@@ -156,14 +180,22 @@ button:hover{
   border-top: 1px solid #aaa;
   border-left: 1px solid #aaa;
 }
-
+button[disabled]{
+  color: #999 !important;
+}
+button[disabled]:hover{
+  top: 0 !important;
+  left: 0 !important;
+  border: 1px solid #ccc !important;
+  border-right: 1px solid #aaa !important;
+  border-bottom: 1px solid #aaa !important;
+}
 .pagination{
   text-align: center;
 }
 .pagination li{
   display: inline;
 }
-
 
 .login,
 .users
@@ -173,16 +205,65 @@ button:hover{
 }
 .posts .index,
 .posts .show{
-  width: 600px;
+  width: 700px;
   margin: 0 auto;
 }
 .posts .new,
 .posts .edit{
-  width: 400px;
+  width: 600px;
   margin: 0 auto;
 }
+.posts input{
+  width: 480px;
+}
+.posts textarea{
+  width: 480px;
+}
+.posts .index .counter{
+  padding-left: 10px;
+}
+.posts .index .search{
+  height:40px;
+}
+.posts .index .search select{
+  float: left;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-color: white;
+  padding: 0px 3px;
+  width: 70px;
+  height:19px;
+}
+.posts .index .search select::after{
+  content: "v";
+}
+.posts .index .search input[type='text']{
+  float: left;
+  margin-left: 2px;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-color: white;
+  padding: 1px 3px;
+  width: 120px;
+  height:15px;
+}
+select::-ms-expand { /* for IE 11 */
+    display: none;
+}
+.posts .index .search button{
+  float: left;
+  color: #714d4d;
+  padding: 2px;
+  margin-left: 2px;
+}
+.posts .index .comments{
+  font-size: 10px;
+}
 .posts .show .content{
-  padding: 6px 15px;
+  padding: 6px 15px 20px;
   border-bottom: 1px solid #ccc;
 }
 .posts .show .body{
@@ -199,11 +280,44 @@ button:hover{
   display: inline-block;
   width: 50px;
 }
-.posts input{
-  width: 280px;
+.posts .show .comments{
+  padding-top: 20px;
+  clear: both;
 }
-.posts textarea{
-  width: 280px;
+.posts .show .comments h4{
+  width: 630px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
+  margin-bottom: 10px;
 }
-
-.imgDiv{margin:0 auto; width:300px; height:100px;}
+.posts .show .comments .comment{
+  margin-bottom: 10px;
+}
+.posts .show .comments form{
+  display: inline-block;
+  position : relative;
+}
+.posts .show .comment .body{
+  word-break: break-all;
+  margin-left: 5px;
+  width: 545px;
+}
+.posts .show .comment .delete button{
+  position:relative;
+  top:-1px;
+  padding: 1px 4px;
+  line-height: 10px;
+  min-width: 0;
+}
+.posts .show .addComment textarea{
+  width: 544px;
+  padding-left: 3px;
+  resize: vertical;
+}
+.posts .show .addComment textarea[disabled]{
+  background-color:white
+}
+.posts .show .addComment button{
+  margin-left: 5px;
+  float:right;
+}
